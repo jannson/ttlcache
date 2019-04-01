@@ -234,6 +234,16 @@ func (cache *Cache) Purge() {
 	cache.mutex.Unlock()
 }
 
+func (cache *Cache) Values() []interface{} {
+	var vals []interface{}
+	cache.mutex.Lock()
+	for _, v := range cache.items {
+		vals = append(vals, v.data)
+	}
+	cache.mutex.Unlock()
+	return vals
+}
+
 // NewCache is a helper to create instance of the Cache struct
 func NewCache() *Cache {
 	cache := &Cache{
